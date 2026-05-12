@@ -4,3 +4,4 @@ resources:
   - homepage
   - headlamp/namespace.yaml
   - headlamp/rbac-readonly.yaml
+  - pgadmin

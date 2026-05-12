@@ -13,6 +13,8 @@ spec:
       labels:
         app: homepage
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: raspberry-pi
       initContainers:
         - name: init-config
           image: busybox:1.36

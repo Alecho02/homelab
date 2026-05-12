@@ -50,6 +50,10 @@ data:
             href: http://headlamp.192.168.10.118.nip.io
             icon: kubernetes-dashboard.png
             description: Vista de pods, containers y servicios
+        - pgAdmin:
+            href: http://pgadmin.192.168.10.118.nip.io
+            icon: pgadmin.png
+            description: Administración de PostgreSQL
         - Homepage:
             href: http://home.192.168.10.118.nip.io
             icon: homepage.png

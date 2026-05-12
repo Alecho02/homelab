@@ -33,6 +33,7 @@ Se organizaron carpetas para:
 - URL local actual: `http://home.192.168.10.118.nip.io`.
 - Validado con respuesta HTTP 200.
 - Widget Pi-hole soportado en Homepage (requiere API key para estadísticas).
+- PostgreSQL + pgAdmin + postgres-exporter desplegados para capa de datos y monitoreo.
 
 > `nip.io` evita comprar dominio para pruebas LAN: resuelve el host al IP incluido en el nombre.
 
@@ -47,7 +48,13 @@ Se organizaron carpetas para:
 - Plantilla de reglas: `security/sops/.sops.yaml.example`.
 - Nunca subir llaves privadas ni secretos en claro.
 
-## 8) Buenas prácticas
+## 8) Nota sobre almacenamiento en NAS
+- Tener 6TB RAID1 en el NAS **no significa** que PostgreSQL use 6TB automáticamente.
+- El tamaño real de DB lo define el PVC solicitado en Kubernetes (actualmente `100Gi`).
+- Puedes aumentarlo más adelante recreando PVC/migrando a nuevo volumen según estrategia.
+- Estado actual: el nodo `qnas` está con `disk-pressure`; por eso PostgreSQL quedó corriendo en `raspberry-pi` temporalmente.
+
+## 9) Buenas prácticas
 - No comitear secretos, tokens ni kubeconfigs.
 - Documentar cada cambio operacional en este directorio.
 - Mantener runbooks actualizados tras incidentes o mejoras.
