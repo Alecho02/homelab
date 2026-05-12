@@ -9,15 +9,28 @@ data:
         - GitHub Homelab:
             - href: https://github.com/Alecho02/homelab
   services.yaml: |
-    - Cluster:
-        - Homepage:
-            href: http://home.192.168.10.118.nip.io
-            icon: homepage.png
-            description: Portal principal del homelab
-        - Headlamp:
-            href: http://headlamp.192.168.10.118.nip.io
-            icon: kubernetes-dashboard.png
-            description: Vista de pods, containers y servicios
+    - Media y Descargas:
+        - Jellyfin:
+            href: http://192.168.10.184:8899/web/#/home.html
+            icon: jellyfin.png
+            description: Media server
+        - qBittorrent:
+            href: http://192.168.10.184:8888/
+            icon: qbittorrent.png
+            description: Descargas
+    - Red y DNS:
+        - Pi-hole:
+            href: http://192.168.10.90/admin/login
+            icon: pi-hole.png
+            description: DNS / ad-block
+            widget:
+              type: pihole
+              url: http://192.168.10.90
+              key: CHANGE_ME_PIHOLE_API_KEY
+        - Portainer:
+            href: http://192.168.10.184:9000/#!/auth
+            icon: portainer.png
+            description: Gestión de contenedores en NAS
     - Observabilidad:
         - Grafana:
             href: http://grafana.192.168.10.118.nip.io
@@ -31,23 +44,15 @@ data:
             href: http://alertmanager.192.168.10.118.nip.io
             icon: prometheus.png
             description: Estado y gestión de alertas
-    - NAS (externo al cluster):
-        - Portainer:
-            href: http://192.168.10.184:9000/#!/auth
-            icon: portainer.png
-            description: Gestión de contenedores en NAS
-        - Pi-hole:
-            href: http://192.168.10.90/admin/login
-            icon: pi-hole.png
-            description: DNS / ad-block
-        - Jellyfin:
-            href: http://192.168.10.184:8899/web/#/home.html
-            icon: jellyfin.png
-            description: Media server
-        - qBittorrent:
-            href: http://192.168.10.184:8888/
-            icon: qbittorrent.png
-            description: Descargas
+    - Cluster:
+        - Headlamp:
+            href: http://headlamp.192.168.10.118.nip.io
+            icon: kubernetes-dashboard.png
+            description: Vista de pods, containers y servicios
+        - Homepage:
+            href: http://home.192.168.10.118.nip.io
+            icon: homepage.png
+            description: Portal principal del homelab
   widgets.yaml: |
     - datetime:
         text_size: xl

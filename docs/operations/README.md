@@ -32,6 +32,7 @@ Se organizaron carpetas para:
 - Ingress class: `traefik`.
 - URL local actual: `http://home.192.168.10.118.nip.io`.
 - Validado con respuesta HTTP 200.
+- Widget Pi-hole soportado en Homepage (requiere API key para estadísticas).
 
 > `nip.io` evita comprar dominio para pruebas LAN: resuelve el host al IP incluido en el nombre.
 
