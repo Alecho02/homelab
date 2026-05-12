@@ -26,6 +26,7 @@ data:
             widget:
               type: pihole
               url: http://192.168.10.90
+              version: 6
               key: "{{HOMEPAGE_VAR_PIHOLE_KEY}}"
         - Portainer:
             href: http://192.168.10.184:9000/#!/auth
