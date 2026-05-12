@@ -2,6 +2,11 @@
 
 Procedimientos operativos listos para incidentes comunes.
 
+## Disponibles
+- [Ingress no responde](./ingress-no-responde.md)
+- [Certificados no emiten o no renuevan](./certificados-fallan.md)
+- [Pods en CrashLoopBackOff](./pods-crashloopbackoff.md)
+
 ## Plantilla sugerida por runbook
 1. Síntoma
 2. Causa probable
@@ -9,9 +14,10 @@ Procedimientos operativos listos para incidentes comunes.
 4. Mitigación inmediata
 5. Solución definitiva
 6. Verificación final
+7. Rollback
 
-## Runbooks prioritarios a crear
-- Ingress no responde
-- Certificados no emiten/renuevan
+## Siguientes runbooks sugeridos
 - Grafana/Prometheus caídos
-- Pods en CrashLoopBackoff
+- Nodo `NotReady`
+- PVC/PV sin montar
+- DNS interno fallando
