@@ -1,9 +1,16 @@
-# Presupuesto
+# Presupuesto del Homelab
 
-Registra aquí costos estimados y reales del homelab:
+Este directorio lleva control de costos estimados vs reales.
+
+## Categorías sugeridas
 - Hardware
 - Electricidad
-- Dominio/DNS
-- Backups/servicios externos
+- Dominio / DNS
+- Backups / servicios externos
+- Otros
 
-Actualiza mensualmente.
+## Proceso
+1. Duplicar `monthly-template.csv` por mes.
+2. Registrar estimado al inicio del mes.
+3. Actualizar costo real semanalmente.
+4. Cerrar mes con notas y variaciones.

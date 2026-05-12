@@ -1,26 +1,50 @@
 # Homelab
 
-Repositorio público para documentar y versionar la construcción de nuestro clúster homelab.
+Repositorio público para documentar y versionar la construcción del clúster homelab, sin exponer datos sensibles.
 
-## Objetivo
-- Tener infraestructura reproducible.
-- Guardar manifiestos y configuración por componente.
-- Documentar decisiones técnicas y operación diaria.
-- Llevar control de presupuesto/costos.
+## Qué incluye
+- Manifiestos Kubernetes por capas (`manifests/`).
+- Documentación técnica y operativa (`docs/`).
+- Control de costos (`budget/`).
+- CI básica para validar YAML (`.github/workflows/validate-manifests.yml`).
 
 ## Estructura
-- `manifests/` → YAML/Kustomize/Helm values por capa.
-- `docs/` → arquitectura, operación y runbooks.
-- `budget/` → estimaciones y costos reales.
-- `scripts/` → utilidades de bootstrap/validación.
+```text
+homelab/
+├── manifests/
+│   ├── networking/
+│   │   ├── ingress-nginx/
+│   │   └── cert-manager/
+│   ├── observability/
+│   │   └── kube-prometheus-stack/
+│   └── kustomization.yaml
+├── docs/
+│   ├── architecture/
+│   ├── operations/
+│   └── runbooks/
+├── budget/
+├── scripts/
+└── .github/workflows/
+```
+
+## Stack base (actual)
+- Ingress: `ingress-nginx`
+- Certificados: `cert-manager` + `ClusterIssuer` staging/prod
+- Observabilidad: `kube-prometheus-stack` (Prometheus + Grafana)
+
+## Guía rápida de uso
+1. Clonar repo.
+2. Revisar y ajustar valores por entorno (dominio, correo ACME, passwords).
+3. Aplicar por capas desde `manifests/` usando Kustomize/Flux.
+4. Verificar estado de pods y servicios.
+5. Documentar cualquier cambio en `docs/operations/`.
+
+## Seguridad y datos sensibles
+- No subir secretos reales al repo.
+- Usar placeholders (`admin@example.com`, `change-me`) y reemplazar fuera del control de versiones.
+- Guardar credenciales en un gestor de secretos (SOPS, Vault, External Secrets, etc.).
 
 ## Flujo recomendado
-1. Cambios por PR.
-2. Validación YAML/Kubernetes en CI.
-3. Documentar cada instalación en `docs/operations/`.
-4. Registrar impacto en costos en `budget/`.
-
-## Convenciones
-- Nombres en minúsculas con guiones.
-- Un directorio por componente en `manifests/apps/`.
-- Todo cambio técnico relevante debe incluir actualización de documentación.
+- Todo cambio por Pull Request.
+- Validación automática de YAML en CI.
+- Cada cambio técnico debe actualizar documentación y, si aplica, presupuesto.

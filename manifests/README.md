@@ -1,8 +1,26 @@
 # Manifiestos
 
-Organización sugerida:
-- `bootstrap/`: namespace base, RBAC, CRDs mínimas.
-- `networking/`: ingress controller, cert-manager, DNS.
-- `storage/`: clases de almacenamiento y provisión.
-- `observability/`: Prometheus, Grafana, Loki, alertas.
-- `apps/`: aplicaciones desplegadas.
+Esta carpeta organiza la infraestructura del clúster por dominios funcionales.
+
+## Convención
+- Un subdirectorio por componente.
+- Cada componente incluye su `kustomization.yaml`.
+- Valores sensibles se dejan como placeholders.
+
+## Capas
+- `networking/`
+  - `ingress-nginx/`: controlador de ingress.
+  - `cert-manager/`: gestión de TLS con Let's Encrypt.
+- `observability/`
+  - `kube-prometheus-stack/`: métricas, alertas y dashboards.
+
+## Orden recomendado de despliegue
+1. `networking/ingress-nginx`
+2. `networking/cert-manager`
+3. `observability/kube-prometheus-stack`
+
+## Notas importantes
+- Antes de producción, cambia:
+  - `admin@example.com` en ClusterIssuers.
+  - `change-me` en Grafana.
+- Si no usas Flux, adapta los recursos `HelmRelease/HelmRepository` a Helm CLI o ArgoCD.
