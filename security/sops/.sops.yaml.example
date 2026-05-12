@@ -1,0 +1,8 @@
+creation_rules:
+  - path_regex: manifests/.+secret.*\.ya?ml
+    encrypted_regex: '^(data|stringData)$'
+    age: age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  - path_regex: security/sops/.+\.enc\.ya?ml
+    encrypted_regex: '^(data|stringData)$'
+    age: age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

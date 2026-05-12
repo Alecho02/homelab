@@ -31,6 +31,8 @@ homelab/
 - Ingress: `ingress-nginx`
 - Certificados: `cert-manager` + `ClusterIssuer` staging/prod
 - Observabilidad: `kube-prometheus-stack` (Prometheus + Grafana)
+- Dashboard de servicios: `Homepage`
+- Gestión de secretos (base): `SOPS + age`
 
 ## Guía rápida de uso
 1. Clonar repo.
@@ -42,7 +44,8 @@ homelab/
 ## Seguridad y datos sensibles
 - No subir secretos reales al repo.
 - Usar placeholders (`admin@example.com`, `change-me`) y reemplazar fuera del control de versiones.
-- Guardar credenciales en un gestor de secretos (SOPS, Vault, External Secrets, etc.).
+- Guardar credenciales cifradas con SOPS + age (`docs/security/sops-age.md`).
+- Evolución sugerida: External Secrets + Vault cuando el clúster crezca.
 
 ## Flujo recomendado
 - Todo cambio por Pull Request.

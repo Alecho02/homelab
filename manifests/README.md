@@ -13,11 +13,14 @@ Esta carpeta organiza la infraestructura del clúster por dominios funcionales.
   - `cert-manager/`: gestión de TLS con Let's Encrypt.
 - `observability/`
   - `kube-prometheus-stack/`: métricas, alertas y dashboards.
+- `apps/`
+  - `homepage/`: portal visual para acceder a servicios del homelab.
 
 ## Orden recomendado de despliegue
 1. `networking/ingress-nginx`
 2. `networking/cert-manager`
 3. `observability/kube-prometheus-stack`
+4. `apps/homepage`
 
 ## Notas importantes
 - Antes de producción, cambia:
