@@ -33,21 +33,21 @@ data:
             description: Estado y gestión de alertas
     - NAS (externo al cluster):
         - Portainer:
-            href: https://192.168.10.184:9443
+            href: http://192.168.10.184:9000/#!/auth
             icon: portainer.png
             description: Gestión de contenedores en NAS
         - Pi-hole:
-            href: http://192.168.10.184/admin
+            href: http://192.168.10.90/admin/login
             icon: pi-hole.png
-            description: DNS / ad-block (ajustar IP si corre en otro host)
+            description: DNS / ad-block
         - Jellyfin:
-            href: http://192.168.10.184:8096
+            href: http://192.168.10.184:8899/web/#/home.html
             icon: jellyfin.png
-            description: Media server (si está publicado)
+            description: Media server
         - qBittorrent:
-            href: http://192.168.10.184:8080
+            href: http://192.168.10.184:8888/
             icon: qbittorrent.png
-            description: Descargas (si está publicado)
+            description: Descargas
   widgets.yaml: |
     - datetime:
         text_size: xl
