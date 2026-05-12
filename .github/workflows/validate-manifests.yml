@@ -1,0 +1,19 @@
+name: Validate Manifests
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  lint-yaml:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install yamllint
+        run: pip install yamllint
+
+      - name: Run yamllint
+        run: yamllint .

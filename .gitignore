@@ -1,0 +1,20 @@
+# macOS/Linux
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+
+# Secrets / local env
+.env
+*.pem
+*.key
+secrets/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Kube
+kubeconfig
