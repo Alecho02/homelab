@@ -31,6 +31,11 @@ spec:
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: home.192.168.10.118.nip.io
+            - name: HOMEPAGE_VAR_PIHOLE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: homepage-pihole-widget
+                  key: PIHOLE_API_KEY
           volumeMounts:
             - name: config
               mountPath: /app/config

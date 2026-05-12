@@ -10,6 +10,8 @@
 *.pem
 *.key
 secrets/
+!security/sops/secrets/
+!security/sops/secrets/*.enc.yaml
 
 # Terraform
 .terraform/
