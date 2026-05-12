@@ -1,0 +1,23 @@
+config:
+  inCluster: true
+  inClusterContextName: main
+  oidc:
+    secret:
+      create: false
+
+clusterRoleBinding:
+  create: true
+  clusterRoleName: cluster-admin
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  ingressClassName: traefik
+  hosts:
+    - host: headlamp.192.168.10.118.nip.io
+      paths:
+        - path: /
+          type: Prefix

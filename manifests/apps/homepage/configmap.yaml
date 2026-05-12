@@ -8,26 +8,24 @@ data:
     - Infra:
         - GitHub Homelab:
             - href: https://github.com/Alecho02/homelab
-    - Acceso local:
-        - Traefik LB:
-            - href: http://192.168.10.118
-        - Nodo worker:
-            - href: http://192.168.10.184
   services.yaml: |
-    - Observabilidad:
-        - Grafana:
-            href: http://192.168.10.118:32000
-            description: Dashboards y métricas
-        - Prometheus:
-            href: http://192.168.10.118:32090
-            description: Consultas y targets
-        - Alertmanager:
-            href: http://192.168.10.118:32080
-            description: Alertas (endpoint del servicio)
     - Cluster:
         - Homepage:
             href: http://home.192.168.10.118.nip.io
             description: Portal principal del homelab
+        - Headlamp:
+            href: http://headlamp.192.168.10.118.nip.io
+            description: Vista de pods, containers y servicios
+    - Observabilidad:
+        - Grafana:
+            href: http://grafana.192.168.10.118.nip.io
+            description: Dashboards y métricas
+        - Prometheus:
+            href: http://prometheus.192.168.10.118.nip.io
+            description: Consultas y targets
+        - Alertmanager:
+            href: http://alertmanager.192.168.10.118.nip.io
+            description: Estado y gestión de alertas
   widgets.yaml: |
     - datetime:
         text_size: xl
