@@ -12,3 +12,8 @@ helm upgrade --install headlamp headlamp/headlamp \
 
 URL local:
 - http://headlamp.192.168.10.118.nip.io
+
+Token read-only para login:
+```bash
+kubectl create token headlamp-viewer -n headlamp
+```

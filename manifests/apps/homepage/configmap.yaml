@@ -12,20 +12,42 @@ data:
     - Cluster:
         - Homepage:
             href: http://home.192.168.10.118.nip.io
+            icon: homepage.png
             description: Portal principal del homelab
         - Headlamp:
             href: http://headlamp.192.168.10.118.nip.io
+            icon: kubernetes-dashboard.png
             description: Vista de pods, containers y servicios
     - Observabilidad:
         - Grafana:
             href: http://grafana.192.168.10.118.nip.io
+            icon: grafana.png
             description: Dashboards y métricas
         - Prometheus:
             href: http://prometheus.192.168.10.118.nip.io
+            icon: prometheus.png
             description: Consultas y targets
         - Alertmanager:
             href: http://alertmanager.192.168.10.118.nip.io
+            icon: prometheus.png
             description: Estado y gestión de alertas
+    - NAS (externo al cluster):
+        - Portainer:
+            href: https://192.168.10.184:9443
+            icon: portainer.png
+            description: Gestión de contenedores en NAS
+        - Pi-hole:
+            href: http://192.168.10.184/admin
+            icon: pi-hole.png
+            description: DNS / ad-block (ajustar IP si corre en otro host)
+        - Jellyfin:
+            href: http://192.168.10.184:8096
+            icon: jellyfin.png
+            description: Media server (si está publicado)
+        - qBittorrent:
+            href: http://192.168.10.184:8080
+            icon: qbittorrent.png
+            description: Descargas (si está publicado)
   widgets.yaml: |
     - datetime:
         text_size: xl
