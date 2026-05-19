@@ -5,10 +5,17 @@
 .vscode/
 .idea/
 
+# Generated/decrypted artifacts
+generated/
+*.tmp
+*.dec
+
 # Secrets / local env
 .env
 *.pem
 *.key
+secrets/*.env
+!secrets/*.enc.env
 secrets/
 !security/sops/secrets/
 !security/sops/secrets/*.enc.yaml

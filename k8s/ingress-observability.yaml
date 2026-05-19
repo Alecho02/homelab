@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homelab-observability-notes
+  namespace: monitoring
+data:
+  routes: |
+    grafana.192.168.10.118.nip.io
+    prometheus.192.168.10.118.nip.io
+    alertmanager.192.168.10.118.nip.io
+

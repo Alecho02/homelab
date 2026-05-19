@@ -1,0 +1,9 @@
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hosts:
+    - host: headlamp.192.168.10.118.nip.io
+      paths:
+        - path: /
+          type: Prefix
+

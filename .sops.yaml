@@ -2,3 +2,5 @@ creation_rules:
   - path_regex: security/sops/secrets/.*\.enc\.ya?ml
     encrypted_regex: '^(data|stringData)$'
     age: age1c26e9klyhrh6cgz8amnznuqc4k5y2gfh295fvnjx6mc388srresqsjrudj
+  - path_regex: secrets/.*\.enc\.env$
+    age: age13dq9mpemm593uk7nadm70dhrx5y060mzpk3esj9uknfxml4y0fpqsrqstq

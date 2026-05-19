@@ -1,0 +1,29 @@
+controller:
+  serviceType: ClusterIP
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hostName: jenkins.192.168.10.118.nip.io
+    path: /
+    pathType: Prefix
+  installPlugins:
+    - kubernetes
+    - workflow-aggregator
+    - git
+    - github
+    - configuration-as-code
+  resources:
+    requests:
+      cpu: "300m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "2Gi"
+  admin:
+    createSecret: true
+    username: admin
+    password: admin123-change-now
+persistence:
+  enabled: true
+  size: 20Gi
+  storageClass: local-path
