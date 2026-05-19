@@ -3,7 +3,11 @@ pipeline {
   environment {
     REGISTRY = "ghcr.io/alecho02"
     IMAGE = "java17-vault-service"
-    TAG = "\${env.BUILD_NUMBER}"
+    TAG = "${env.BUILD_NUMBER}"
+    GIT_REPO = "git@github.com:Alecho02/homelab.git"
+    GIT_BRANCH = "main"
+    ARGOCD_APP = "java17-vault-service"
+    MANIFEST_PATH = "training/java17-vault-service/k8s/deployment.yaml"
     VAULT_ADDR = "http://vault.vault.svc.cluster.local:8200"
   }
   stages {
@@ -42,15 +46,60 @@ pipeline {
         }
       }
     }
-    stage('Update K8s Secret + Deploy') {
+    stage('Update K8s Secret') {
       steps {
         sh '''
           set -e
           kubectl -n dev create secret generic java17-vault-service-secret --from-literal=APP_SECRET="$(cat vault_secret_value.txt)" --dry-run=client -o yaml | kubectl apply -f -
-          kubectl -n dev set image deploy/java17-vault-service app=$REGISTRY/$IMAGE:$TAG
-          kubectl -n dev rollout status deploy/java17-vault-service --timeout=180s
+        '''
+      }
+    }
+    stage('Update GitOps Manifest') {
+      steps {
+        sh '''
+          set -e
+          rm -rf gitops-repo
+          git clone --depth 1 --branch "$GIT_BRANCH" "$GIT_REPO" gitops-repo
+          cd gitops-repo
+          git config user.name "jenkins-bot"
+          git config user.email "jenkins@homelab.local"
+
+          NEW_IMAGE="$REGISTRY/$IMAGE:$TAG"
+          sed -i -E "s|image:\s*ghcr.io/alecho02/java17-vault-service:[^[:space:]]+|image: $NEW_IMAGE|g" "$MANIFEST_PATH"
+
+          if git diff --quiet -- "$MANIFEST_PATH"; then
+            echo "No manifest changes detected. Exiting early."
+            exit 0
+          fi
+
+          git add "$MANIFEST_PATH"
+          git commit -m "ci(jenkins): deploy $IMAGE:$TAG"
+          git push origin "$GIT_BRANCH"
+        '''
+      }
+    }
+    stage('Wait For Argo CD Sync') {
+      steps {
+        sh '''
+          set -e
+          for i in $(seq 1 30); do
+            sync_status=$(kubectl -n argocd get application "$ARGOCD_APP" -o jsonpath='{.status.sync.status}' 2>/dev/null || true)
+            health_status=$(kubectl -n argocd get application "$ARGOCD_APP" -o jsonpath='{.status.health.status}' 2>/dev/null || true)
+
+            echo "Attempt $i: sync=$sync_status health=$health_status"
+            if [ "$sync_status" = "Synced" ] && [ "$health_status" = "Healthy" ]; then
+              echo "Argo CD reports app synced and healthy."
+              exit 0
+            fi
+            sleep 10
+          done
+
+          echo "Argo CD app did not reach Synced/Healthy in time."
+          kubectl -n argocd get application "$ARGOCD_APP" -o yaml | tail -n 120
+          exit 1
         '''
       }
     }
   }
 }
+

@@ -170,3 +170,29 @@ PIHOLE_API_KEY=your_app_password_or_token
 ```
 
 Keep real secrets out of git and long-term memory.
+
+## Jenkins + Argo CD GitOps Flow (training)
+
+Objetivo: Jenkins construye/pushea imagen y actualiza manifiesto en Git; Argo CD detecta el commit y despliega.
+
+### Componentes
+
+- Jenkins pipeline: `training/jenkins/Jenkinsfile`
+- Manifiesto app: `training/java17-vault-service/k8s/deployment.yaml`
+- Argo CD app (service training): `argocd/apps/java17-vault-service/application.yaml`
+- Argo CD app (jenkins chart): `argocd/apps/jenkins/application.yaml`
+
+### Aplicar aplicaciones Argo CD
+
+```bash
+kubectl apply -f argocd/apps/jenkins/application.yaml
+kubectl apply -f argocd/apps/java17-vault-service/application.yaml
+```
+
+### Flujo CI/CD
+
+1. Jenkins build + push de imagen a GHCR.
+2. Jenkins actualiza `image:` en `training/java17-vault-service/k8s/deployment.yaml`.
+3. Jenkins hace commit/push a `main`.
+4. Argo CD auto-sync aplica el cambio y converge a `Synced/Healthy`.
+
