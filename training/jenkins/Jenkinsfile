@@ -10,11 +10,7 @@ pipeline {
     MANIFEST_PATH = "training/java17-vault-service/k8s/deployment.yaml"
     VAULT_ADDR = "http://vault.vault.svc.cluster.local:8200"
   }
-  stages {
-    stage('Checkout') {
-      steps { checkout scm }
-    }
-    stage('Read Secret From Vault') {
+  stages {    stage('Read Secret From Vault') {
       steps {
         withCredentials([string(credentialsId: 'vault-root-token', variable: 'VAULT_TOKEN')]) {
           sh '''
