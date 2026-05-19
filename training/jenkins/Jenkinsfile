@@ -65,7 +65,7 @@ pipeline {
           git config user.email "jenkins@homelab.local"
 
           NEW_IMAGE="$REGISTRY/$IMAGE:$TAG"
-          sed -i -E "s|image:\s*ghcr.io/alecho02/java17-vault-service:[^[:space:]]+|image: $NEW_IMAGE|g" "$MANIFEST_PATH"
+          sed -i -E "s|image:[[:space:]]*ghcr.io/alecho02/java17-vault-service:[^[:space:]]+|image: $NEW_IMAGE|g" "$MANIFEST_PATH"
 
           if git diff --quiet -- "$MANIFEST_PATH"; then
             echo "No manifest changes detected. Exiting early."
