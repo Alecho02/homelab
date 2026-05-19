@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: ghcr.io/alecho02/java17-vault-service:e2e-test-1
+        image: ghcr.io/alecho02/java17-vault-service:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
