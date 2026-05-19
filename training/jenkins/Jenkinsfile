@@ -51,6 +51,16 @@ pipeline {
         }
       }
     }
+    stage('Update Image Pull Secret') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'ghcr-credentials', usernameVariable: 'GH_USER', passwordVariable: 'GH_TOKEN')]) {
+          sh '''
+            set -e
+            kubectl -n dev create secret docker-registry ghcr-pull-secret +              --docker-server=ghcr.io +              --docker-username="$GH_USER" +              --docker-password="$GH_TOKEN" +              --docker-email="jenkins@homelab.local" +              --dry-run=client -o yaml | kubectl apply -f -
+          '''
+        }
+      }
+    }
     stage('Update K8s Secret') {
       steps {
         sh '''
