@@ -19,7 +19,7 @@ pipeline {
             if command -v jq >/dev/null 2>&1; then
               SECRET_VALUE=$(printf '%s' "$VAULT_JSON" | jq -r '.data.data.APP_SECRET')
             else
-              SECRET_VALUE=$(printf '%s' "$VAULT_JSON" | sed -n 's/.*"APP_SECRET"[[:space:]]*:[[:space:]]*"\\{0,1\}\([^"]*\)".*/\1/p')
+              SECRET_VALUE=$(printf '%s' "$VAULT_JSON" | tr -d '\n' | grep -o '"APP_SECRET"[[:space:]]*:[[:space:]]*"[^"]*"' | head -n1 | cut -d'"' -f4)
             fi
             if [ -z "$SECRET_VALUE" ] || [ "$SECRET_VALUE" = "null" ]; then
               echo "Failed to parse APP_SECRET from Vault response"
@@ -56,7 +56,12 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'ghcr-credentials', usernameVariable: 'GH_USER', passwordVariable: 'GH_TOKEN')]) {
           sh '''
             set -e
-            kubectl -n dev create secret docker-registry ghcr-pull-secret +              --docker-server=ghcr.io +              --docker-username="$GH_USER" +              --docker-password="$GH_TOKEN" +              --docker-email="jenkins@homelab.local" +              --dry-run=client -o yaml | kubectl apply -f -
+            kubectl -n dev create secret docker-registry ghcr-pull-secret \
+              --docker-server=ghcr.io \
+              --docker-username="$GH_USER" \
+              --docker-password="$GH_TOKEN" \
+              --docker-email="jenkins@homelab.local" \
+              --dry-run=client -o yaml | kubectl apply -f -
           '''
         }
       }
