@@ -1,0 +1,8 @@
+server:
+  dev:
+    enabled: true
+    devRootToken: "root-training-change-me"
+  service:
+    type: ClusterIP
+ui:
+  enabled: true
