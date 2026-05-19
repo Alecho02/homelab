@@ -22,7 +22,7 @@ controller:
   admin:
     createSecret: true
     username: admin
-    password: CHANGE_ME_SET_SECRET
+    password: nkTTy5YmeMIgPbshkS41FC0dw2aWk2s3
 persistence:
   enabled: true
   size: 20Gi
