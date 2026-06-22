@@ -2,21 +2,22 @@
 
 ## Overview
 
-The homelab is organized around a small Kubernetes-first platform with a separate application stack for `Pipita Store`.
+The homelab is organized around a public storefront plus a broader home service platform. The goal is to show how the pieces fit together without exposing private implementation details.
 
 ## Principles
 
 - Keep the public footprint small
 - Separate infrastructure concerns from app concerns
-- Prefer GitOps over manual drift
+- Prefer simple, repeatable operations over one-off fixes
 - Avoid committing secrets or private operational data
 
 ## Core Layers
 
-- Compute: Raspberry Pi nodes running `k3s`
-- Deployment: `Argo CD`
-- Observability: `Grafana`, `Prometheus`, alerting components
-- Exposure: Cloudflare Tunnel and local reverse proxying
+- Public app layer: `Pipita Store` with `PostgreSQL` and `Nginx`
+- Media layer: `Jellyfin`, `Jellyseerr`, `Radarr`, `Sonarr`, `Bazarr`, `Prowlarr`, `FlareSolverr`, `Jellystat`, `qBittorrent`
+- Network layer: `Pi-hole` and `Portainer`
+- Observability layer: `Grafana`, `Prometheus`, `Alertmanager`
+- Cluster/admin layer: `Homepage`, `Headlamp`, `pgAdmin`
 - Storage: NAS-backed persistent data and backups
 
 ## Public vs Private

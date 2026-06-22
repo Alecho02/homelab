@@ -6,13 +6,15 @@
 - Review deployment status
 - Validate backups
 - Confirm observability alerts
+- Refresh the Homepage catalog when services change
 
 ## Deployment Flow
 
 1. Update the Git repository
-2. Let `Argo CD` reconcile the desired state
-3. Verify app health and ingress behavior
-4. Check logs and metrics for regressions
+2. Bring the storefront stack up with `docker compose`
+3. Apply sanitized cluster or portal manifests directly when needed
+4. Verify app health, proxy behavior, and service visibility
+5. Check logs and metrics for regressions
 
 ## Safety Rules
 

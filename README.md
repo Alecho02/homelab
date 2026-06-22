@@ -1,60 +1,117 @@
 # Homelab Portfolio
 
-This repository is a public-facing snapshot of my current homelab. It is written to be portfolio-friendly: useful for LinkedIn, clear about what the system does, and careful not to expose secrets.
+This repository is a public-facing snapshot of the homelab as it exists today. It is written to read well in a portfolio or LinkedIn context while staying away from passwords, tokens, private hostnames, and other sensitive operational details.
 
-## What It Represents
+## What Is In Scope
 
-- A small Raspberry Pi based homelab built for learning and repeatable operations
-- A current stack centered on `k3s`, `Argo CD`, observability, and controlled public exposure
-- A separate application deployment, `Pipita Store`, kept inside the same ecosystem
+- `Pipita Store`, the public storefront
+- The homelab service catalog that supports media, network, monitoring, and cluster access
+- Sanitized manifests that describe how the internal portal is laid out
+- Captures from live apps that show the system in use
 
-## Current Stack
+## What Is Confirmed Here
 
-- `k3s` cluster with a Raspberry Pi control-plane and worker node
-- GitOps deployment flow with `Argo CD`
-- Observability with `Grafana`, `Prometheus`, and alerting components
-- Cloudflare Tunnel for controlled public access
-- NAS-backed storage and backup workflows
-- Supporting home services such as media, dashboards, and admin tools
-- `Pipita Store` as a separate application deployment
+From the files in this repo, the stack is organized around:
 
-## What This Repo Shows
+- `Pipita Store` running as a containerized app
+- `PostgreSQL` for application persistence
+- `Nginx` as the public reverse proxy for the storefront
+- Local media and assets mounted into the app and proxy layers
+- A broader homelab service catalog that covers media, DNS, observability, and cluster tools
 
-- Infrastructure organization and service boundaries
-- Public vs private exposure decisions
-- Containerized workloads and reverse proxying
-- Backup awareness and restore-friendly layouts
-- Practical homelab operations without leaking secrets
+## Current Homelab Stack
 
-## Pipita Store
+### Public Application
 
-`Pipita Store` is the current application deployment included in the homelab ecosystem.
+- `Pipita Store` - storefront application
+- `PostgreSQL` - backing database
+- `Nginx` - reverse proxy and static file edge
 
-Highlights:
+### Media and Downloads
 
-- Docker Compose deployment for app, database, and public proxy
-- App published through a local Nginx reverse proxy
-- Database credentials injected from environment variables
-- Local product media and assets kept out of Git
+- `Jellyfin` - media server
+- `Jellyseerr` - request workflow for movies and series
+- `Radarr` - movie management
+- `Sonarr` - series management
+- `Bazarr` - subtitles
+- `Prowlarr` - indexer management
+- `FlareSolverr` - resolver for indexers
+- `Jellystat` - Jellyfin statistics
+- `qBittorrent` - downloads
 
-## Security Posture
+### Network and DNS
 
-- No passwords, API tokens, or private keys are committed
-- Local backups, workspace notes, and generated artifacts are ignored
-- Public docs stay high-level and professional
-- Admin and operational surfaces remain private unless explicitly exposed
+- `Pi-hole` - DNS and ad blocking
+- `Portainer` - container management on the NAS
 
-## Suggested Repo Structure
+### Observability
 
-```text
-homelab-portfolio/
-  README.md
-  .gitignore
-  docs/
-    architecture.md
-    operations.md
+- `Grafana` - dashboards and metrics
+- `Prometheus` - metrics collection and scraping
+- `Alertmanager` - alert routing and status
+
+### Cluster and Admin
+
+- `Homepage` - internal portal for the homelab
+- `Headlamp` - Kubernetes visibility
+- `pgAdmin` - PostgreSQL administration
+- Router admin - local network management
+
+## How It Was Implemented
+
+The platform is split into a small public storefront and a larger homelab service layer:
+
+1. The storefront runs as a containerized app stack.
+2. `PostgreSQL` holds the persistent data.
+3. `Nginx` publishes the storefront through a controlled public edge.
+4. Homepage keeps the internal catalog of services organized.
+5. Observability services track health, usage, and alerts.
+6. Screenshots and manifests stay sanitized so the repo can be shared publicly.
+
+## Representative Commands
+
+These are the kinds of commands used to bring the stack up and verify it:
+
+```bash
+docker compose up -d
+docker compose logs -f
+kubectl get nodes
+kubectl get pods -A
+kubectl get svc -A
+kubectl apply -f manifests/homepage-services.example.yaml
 ```
+
+## Reverse Proxy
+
+The storefront is not exposed by the app container directly.
+
+- The app stays behind `Nginx`
+- `Nginx` serves the public edge and forwards requests to the app
+- Static media and assets are handled separately
+- The database remains isolated from the public layer
+
+That gives the project a cleaner operational shape and a more professional story for public sharing.
+
+## Monitoring
+
+The monitoring layer is built around:
+
+- `Prometheus` for metrics collection and scraping
+- `Grafana` for dashboards and visual analysis
+- `Alertmanager` for alert routing and status
+
+This is enough to explain how the platform is observed without exposing internal targets or sensitive endpoints.
+
+## Public Files
+
+- `docs/service-catalog.md`
+- `docs/screenshots/README.md`
+- `manifests/homepage-services.example.yaml`
+- `docs/screenshots/jellyseerr-dashboard.jpg`
+- `docs/screenshots/jellystat-analytics.jpg`
 
 ## Notes
 
-This repo is intentionally smaller than a full production backup. The goal is to present a believable, maintainable homelab story that reads well in a portfolio or LinkedIn profile.
+- This repo does not describe a historical Argo CD setup.
+- The README reflects the current documented stack instead of older versions.
+- Anything that could leak credentials, private addresses, or internal-only operational detail stays out of the public tree.
