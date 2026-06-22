@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-services-example
+  namespace: homepage
+data:
+  settings.yaml: |
+    title: Homelab
+    theme: dark
+    color: slate
+  services.yaml: |
+    - Internet:
+        - Pipita Store:
+            href: https://<public-host>/
+            description: Public storefront
+        - Jellyfin:
+            href: https://<public-host>/
+            description: Media server
+        - Jellyseerr:
+            href: https://<public-host>/
+            description: Request workflow for movies and series
+        - Grafana:
+            href: https://<public-host>/
+            description: Dashboards and metrics
+    - Media and Downloads:
+        - Jellyfin:
+            href: http://<nas-host>:<port>/
+            description: Media server
+        - Jellyseerr:
+            href: http://<nas-host>:<port>/
+            description: Request workflow for movies and series
+        - Radarr:
+            href: http://<nas-host>:<port>/
+            description: Movie management
+        - Sonarr:
+            href: http://<nas-host>:<port>/
+            description: Series management
+        - Bazarr:
+            href: http://<nas-host>:<port>/
+            description: Subtitles
+        - Prowlarr:
+            href: http://<nas-host>:<port>/
+            description: Indexer management
+        - FlareSolverr:
+            href: http://<nas-host>:<port>/
+            description: Resolver for indexers
+        - Jellystat:
+            href: http://<nas-host>:<port>/
+            description: Jellyfin statistics
+        - qBittorrent:
+            href: http://<nas-host>:<port>/
+            description: Downloads
+    - Network and DNS:
+        - Pi-hole:
+            href: http://<dns-host>/admin/
+            description: DNS and ad blocking
+        - Portainer:
+            href: http://<nas-host>:<port>/
+            description: Container management
+    - Observability:
+        - Grafana:
+            href: http://<cluster-host>/
+            description: Dashboards and metrics
+        - Prometheus:
+            href: http://<cluster-host>/
+            description: Metrics collection and scraping
+        - Alertmanager:
+            href: http://<cluster-host>/
+            description: Alert routing and status
+    - Cluster:
+        - Headlamp:
+            href: http://<cluster-host>/
+            description: Kubernetes visibility
+        - pgAdmin:
+            href: http://<cluster-host>/
+            description: PostgreSQL administration
+        - Homepage:
+            href: http://<cluster-host>/
+            description: Internal portal
