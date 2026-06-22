@@ -1,55 +1,48 @@
 # Homelab
 
-Raspberry Pi 5 homelab project focused on learning and operating a small production-style platform with Kubernetes, GitOps, observability, and service hardening.
+This repository documents a Raspberry Pi 5 homelab built as a small production-style platform for learning, portfolio work, and repeatable operations.
 
-## What is running here
+## Current Stack
 
-- `k3s` cluster with a Raspberry Pi control plane and a second node for workload distribution
-- GitOps-style app delivery with `Argo CD`
-- CI/CD automation with `Jenkins`
-- Monitoring and dashboards with `Prometheus` and `Grafana`
-- Storage and data services backed by `PostgreSQL` and NAS-backed volumes
-- Cloudflare Tunnel for controlled public access to selected services
-- Supporting service stack for home and side projects, including `Pipita Store`
+- `k3s` cluster with Raspberry Pi control-plane and a worker node
+- GitOps deployment flow with `Argo CD`
+- Observability stack with `Grafana`, `Prometheus`, and alerting components
+- Cloudflare Tunnel for controlled public exposure
+- NAS-backed storage and backup workflows
+- Supporting home services such as media, dashboards, and admin tools
+- `Pipita Store`, a separate app deployment kept in the same homelab ecosystem
 
-## Current posture
+## What This Repo Shows
 
-- Public exposure is intentionally limited to selected applications
-- Admin and operational services are kept private by default
-- Sensitive components are behind tunnel or access controls where appropriate
-- Backups are kept local and excluded from version control
+- Infrastructure organization and service boundaries
+- Public vs private exposure decisions
+- Containerized workloads and reverse proxying
+- Backup awareness and restore-friendly layouts
+- Practical homelab operations without leaking secrets
 
 ## Pipita Store
 
-`Pipita Store` is the main application currently represented in this repository.
+`Pipita Store` is the current application deployment included here.
 
-Current characteristics:
+Highlights:
 
-- Docker Compose deployment for the app, database, and public reverse proxy
-- App bound to localhost only
-- Nginx proxy used to publish the storefront safely
-- Product media and catalog assets stored locally with the application
-- Environment values are injected from local variables; `.env.example` documents the required inputs
+- Docker Compose deployment for app, database, and public proxy
+- App published through a local Nginx reverse proxy
+- Database credentials injected from environment variables
+- Local product media and assets kept out of Git
 
-## Security notes
+## Security Posture
 
-- No passwords, API tokens, or private keys should be committed
-- Local backups and workspace notes are ignored by Git
-- Public documentation should stay high-level and portfolio-friendly
+- No passwords, API tokens, or private keys are committed
+- Local backups, workspace notes, and generated artifacts are ignored
+- Public docs stay high-level and portfolio-friendly
+- Admin and operational surfaces remain private unless explicitly exposed
 
-## Roadmap
+## Notes for Reviewers
 
-- Continue documenting the homelab architecture and service inventory
-- Keep tightening exposure boundaries for public-facing services
-- Improve observability, backup verification, and recovery drills
-- Expand deployment notes so the stack is easier to reproduce
+This homelab is meant to read like a real, maintained environment rather than a demo:
 
-## For recruiters
-
-This repository is meant to show a practical home production environment with real operational tradeoffs:
-
-- infrastructure segregation
-- reverse proxying and controlled exposure
-- backup awareness
-- GitOps and automation
-- application hardening
+- the stack is segmented
+- exposure is intentional
+- the docs are kept current with the deployment
+- the goal is to show practical DevOps and cloud engineering habits
