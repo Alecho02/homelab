@@ -1,0 +1,33 @@
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# Backups and exports
+backups/
+*.sql
+*.dump
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+
+# Generated or local-only artifacts
+tmp/
+temp/
+*.log
+*.swp
+*.swo
+.DS_Store
+
+# Tooling
+.idea/
+.vscode/
+node_modules/
+dist/
+build/
