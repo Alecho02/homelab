@@ -1,0 +1,25 @@
+.openclaw/secrets/
+.openclaw/
+memory/
+tmp/
+AGENTS.md
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+
+# Local service data and exports
+pipita-store/assets/
+pipita-store/media/
+pipita-store/backups/
+
+# Environment files and secrets
+.env
+.env.*
+!pipita-store/.env.example
+*.secret
+*.key
+*.pem
+*.p12
+*.pfx
