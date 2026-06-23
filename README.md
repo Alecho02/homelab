@@ -18,6 +18,7 @@ From the files in this repo, the stack is organized around:
 - `Nginx` as the public reverse proxy for the storefront
 - A k3s cluster split across a Raspberry Pi control-plane and a `qnas` worker
 - `Cloudflare Tunnel` and `Traefik` for cluster exposure where appropriate
+- A NAS layer with about 6 TB of RAID1 storage for media, backups, and shared data
 - A broader homelab service catalog that covers media, DNS, observability, and cluster tools
 
 ## Current Homelab Stack
@@ -28,7 +29,7 @@ From the files in this repo, the stack is organized around:
 - `PostgreSQL` - backing database
 - `Nginx` - reverse proxy and static file edge
 
-### Media and Downloads
+### NAS Media Platform
 
 - `Jellyfin` - media server
 - `Jellyseerr` - request workflow for movies and series
@@ -43,6 +44,7 @@ From the files in this repo, the stack is organized around:
 ### Network and DNS
 
 - `Pi-hole` - DNS and ad blocking
+- `Tailscale` - private mesh access for admin and remote reachability
 - `Portainer` - container management on the NAS
 
 ### Observability
@@ -68,9 +70,10 @@ The platform is split into a small public storefront and a larger homelab servic
 2. `PostgreSQL` holds the persistent data.
 3. `Nginx` publishes the storefront through a controlled public edge.
 4. The Raspberry Pi hosts the k3s control-plane and most admin surfaces.
-5. The NAS-side worker hosts tunnel, ingress, and observability workloads.
-6. Homepage keeps the internal catalog of services organized.
-7. Screenshots and manifests stay sanitized so the repo can be shared publicly.
+5. The NAS hosts the media automation stack, DNS helpers, and remote access tooling.
+6. The NAS-side worker also hosts tunnel, ingress, and observability workloads.
+7. Homepage keeps the internal catalog of services organized.
+8. Screenshots and manifests stay sanitized so the repo can be shared publicly.
 
 ## Representative Commands
 
@@ -109,6 +112,13 @@ The monitoring layer is built around:
 - `Alertmanager` for alert routing and status
 
 This is enough to explain how the platform is observed without exposing internal targets or sensitive endpoints.
+
+The live apps and exporters feed Grafana with health and usage data for:
+
+- database health
+- media automation health
+- public service availability
+- ingress and tunnel status
 
 ## Public Files
 

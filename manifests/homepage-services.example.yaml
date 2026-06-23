@@ -22,7 +22,7 @@ data:
         - Grafana:
             href: https://<public-host>/
             description: Dashboards and metrics
-    - Media and Downloads:
+    - NAS and Media:
         - Jellyfin:
             href: http://<nas-host>:<port>/
             description: Media server
@@ -54,6 +54,9 @@ data:
         - Pi-hole:
             href: http://<dns-host>/admin/
             description: DNS and ad blocking
+        - Tailscale:
+            href: https://login.tailscale.com/
+            description: Private mesh access for admin and remote reachability
         - Portainer:
             href: http://<nas-host>:<port>/
             description: Container management

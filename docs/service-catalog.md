@@ -2,6 +2,10 @@
 
 This page documents the public-facing and home-facing services in the homelab without exposing secrets or internal credentials.
 
+## NAS Platform
+
+The NAS is the home for the media and utility stack, backed by about 6 TB of RAID1 storage and managed through Portainer where containers are involved.
+
 ## Internet
 
 - `Pipita Store` - public storefront
@@ -24,6 +28,7 @@ This page documents the public-facing and home-facing services in the homelab wi
 ## Network And DNS
 
 - `Pi-hole` - DNS and ad blocking
+- `Tailscale` - private mesh access for admin and remote reachability
 - `Portainer` - container management on the NAS
 
 ## Observability

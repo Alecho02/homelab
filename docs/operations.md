@@ -27,6 +27,8 @@ kubectl get pvc -A
 kubectl get ingress -A
 docker compose ps
 docker compose logs -f
+docker compose config
+docker system df
 ```
 
 ## Safety Rules
