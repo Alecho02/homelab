@@ -15,6 +15,19 @@
 3. Apply sanitized cluster or portal manifests directly when needed
 4. Verify app health, proxy behavior, and service visibility
 5. Check logs and metrics for regressions
+6. Confirm the Raspberry Pi and `qnas` placements still match the intended split
+
+## Useful Checks
+
+```bash
+kubectl get nodes -o wide
+kubectl get pods -A -o wide
+kubectl get svc -A
+kubectl get pvc -A
+kubectl get ingress -A
+docker compose ps
+docker compose logs -f
+```
 
 ## Safety Rules
 

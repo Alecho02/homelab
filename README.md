@@ -16,7 +16,8 @@ From the files in this repo, the stack is organized around:
 - `Pipita Store` running as a containerized app
 - `PostgreSQL` for application persistence
 - `Nginx` as the public reverse proxy for the storefront
-- Local media and assets mounted into the app and proxy layers
+- A k3s cluster split across a Raspberry Pi control-plane and a `qnas` worker
+- `Cloudflare Tunnel` and `Traefik` for cluster exposure where appropriate
 - A broader homelab service catalog that covers media, DNS, observability, and cluster tools
 
 ## Current Homelab Stack
@@ -50,11 +51,13 @@ From the files in this repo, the stack is organized around:
 - `Prometheus` - metrics collection and scraping
 - `Alertmanager` - alert routing and status
 
-### Cluster and Admin
+### Cluster and Access
 
 - `Homepage` - internal portal for the homelab
 - `Headlamp` - Kubernetes visibility
 - `pgAdmin` - PostgreSQL administration
+- `Cloudflare Tunnel` - selected public exposure without broad inbound access
+- `Traefik` - Kubernetes ingress and service exposure
 - Router admin - local network management
 
 ## How It Was Implemented
@@ -64,9 +67,10 @@ The platform is split into a small public storefront and a larger homelab servic
 1. The storefront runs as a containerized app stack.
 2. `PostgreSQL` holds the persistent data.
 3. `Nginx` publishes the storefront through a controlled public edge.
-4. Homepage keeps the internal catalog of services organized.
-5. Observability services track health, usage, and alerts.
-6. Screenshots and manifests stay sanitized so the repo can be shared publicly.
+4. The Raspberry Pi hosts the k3s control-plane and most admin surfaces.
+5. The NAS-side worker hosts tunnel, ingress, and observability workloads.
+6. Homepage keeps the internal catalog of services organized.
+7. Screenshots and manifests stay sanitized so the repo can be shared publicly.
 
 ## Representative Commands
 
@@ -78,6 +82,8 @@ docker compose logs -f
 kubectl get nodes
 kubectl get pods -A
 kubectl get svc -A
+kubectl get pvc -A
+kubectl get ingress -A
 kubectl apply -f manifests/homepage-services.example.yaml
 ```
 
@@ -88,6 +94,8 @@ The storefront is not exposed by the app container directly.
 - The app stays behind `Nginx`
 - `Nginx` serves the public edge and forwards requests to the app
 - Static media and assets are handled separately
+- `Cloudflare Tunnel` is used for selected cluster services
+- `Traefik` handles Kubernetes ingress
 - The database remains isolated from the public layer
 
 That gives the project a cleaner operational shape and a more professional story for public sharing.

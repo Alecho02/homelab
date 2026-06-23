@@ -32,6 +32,11 @@ This page documents the public-facing and home-facing services in the homelab wi
 - `Prometheus` - metrics collection and scraping
 - `Alertmanager` - alert routing and status
 
+## Cluster And Access
+
+- `Cloudflare Tunnel` - selected public exposure for cluster services
+- `Traefik` - Kubernetes ingress and service exposure
+
 ## Cluster
 
 - `Headlamp` - Kubernetes visibility
