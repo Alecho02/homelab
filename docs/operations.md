@@ -7,6 +7,7 @@
 - Validate backups
 - Confirm observability alerts
 - Refresh the Homepage catalog when services change
+- Keep the public docs and manifests aligned with the live stack
 
 ## Deployment Flow
 
@@ -16,6 +17,7 @@
 4. Verify app health, proxy behavior, and service visibility
 5. Check logs and metrics for regressions
 6. Confirm the Raspberry Pi and `qnas` placements still match the intended split
+7. Update the public-safe service catalog when the NAS or cluster changes
 
 ## Useful Checks
 
@@ -29,6 +31,10 @@ docker compose ps
 docker compose logs -f
 docker compose config
 docker system df
+kubectl apply -f manifests/homepage-services.example.yaml
+kubectl apply -f manifests/homepage-cluster.example.yaml
+kubectl apply -f manifests/homepage-nas.example.yaml
+kubectl apply -f manifests/homepage-observability.example.yaml
 ```
 
 ## Safety Rules

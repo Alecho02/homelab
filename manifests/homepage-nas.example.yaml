@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-nas-example
+  namespace: homepage
+data:
+  settings.yaml: |
+    title: NAS
+    theme: dark
+    color: slate
+  services.yaml: |
+    - Media:
+        - Jellyfin:
+            href: http://<nas-host>:<port>/
+            description: Media server
+        - Jellyseerr:
+            href: http://<nas-host>:<port>/
+            description: Request workflow for movies and series
+        - Radarr:
+            href: http://<nas-host>:<port>/
+            description: Movie automation
+        - Sonarr:
+            href: http://<nas-host>:<port>/
+            description: Series automation
+        - Bazarr:
+            href: http://<nas-host>:<port>/
+            description: Subtitle management
+        - Prowlarr:
+            href: http://<nas-host>:<port>/
+            description: Indexer management
+        - FlareSolverr:
+            href: http://<nas-host>:<port>/
+            description: Resolver support
+        - Jellystat:
+            href: http://<nas-host>:<port>/
+            description: Usage and analytics
+        - qBittorrent:
+            href: http://<nas-host>:<port>/
+            description: Download client
+    - Network:
+        - Pi-hole:
+            href: http://<dns-host>/admin/
+            description: DNS and ad blocking
+        - Tailscale:
+            href: https://login.tailscale.com/
+            description: Private remote access
+        - Portainer:
+            href: http://<nas-host>:<port>/
+            description: Container management

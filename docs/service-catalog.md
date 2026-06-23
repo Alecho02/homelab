@@ -5,6 +5,7 @@ This page documents the public-facing and home-facing services in the homelab wi
 ## NAS Platform
 
 The NAS is the home for the media and utility stack, backed by about 6 TB of RAID1 storage and managed through Portainer where containers are involved.
+It is the place where media flows in, gets automated, and becomes available through the rest of the platform.
 
 ## Internet
 
@@ -37,16 +38,18 @@ The NAS is the home for the media and utility stack, backed by about 6 TB of RAI
 - `Prometheus` - metrics collection and scraping
 - `Alertmanager` - alert routing and status
 
+Grafana is treated as the visibility layer for the lab, so it can show service health, usage patterns, and the status of the media automation chain without exposing private targets.
+
 ## Cluster And Access
 
 - `Cloudflare Tunnel` - selected public exposure for cluster services
 - `Traefik` - Kubernetes ingress and service exposure
+- `Homepage` - internal service catalog and landing page
 
 ## Cluster
 
 - `Headlamp` - Kubernetes visibility
 - `pgAdmin` - PostgreSQL administration
-- `Homepage` - internal portal for the homelab
 - Router admin - local network management
 
 ## Notes

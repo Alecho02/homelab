@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-observability-example
+  namespace: homepage
+data:
+  settings.yaml: |
+    title: Observability
+    theme: dark
+    color: slate
+  services.yaml: |
+    - Metrics:
+        - Grafana:
+            href: http://<observability-host>/
+            description: Dashboards and visual analysis
+        - Prometheus:
+            href: http://<observability-host>/
+            description: Metrics collection and scraping
+        - Alertmanager:
+            href: http://<observability-host>/
+            description: Alert routing and status
+    - Health Signals:
+        - Exporters:
+            href: http://<observability-host>/
+            description: Cluster and NAS metrics sources
+        - Checks:
+            href: http://<observability-host>/
+            description: Service availability and response checks

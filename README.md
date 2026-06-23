@@ -1,33 +1,36 @@
-# Homelab Portfolio
+# Homelab Portfolio 🛠️
 
-This repository is a public-facing snapshot of the homelab as it exists today. It is written to read well in a portfolio or LinkedIn context while staying away from passwords, tokens, private hostnames, and other sensitive operational details.
+This repository is a public-facing snapshot of a real homelab built to read well in a DevOps, Cloud, and SRE portfolio. It shows how the platform was assembled, how the services are split across the cluster and the NAS, and how the whole thing is documented without leaking secrets.
 
-## What Is In Scope
+## What This Repo Shows
 
-- `Pipita Store`, the public storefront
-- The homelab service catalog that supports media, network, monitoring, and cluster access
-- Sanitized manifests that describe how the internal portal is laid out
-- Captures from live apps that show the system in use
+- 🧱 A k3s cluster split across a Raspberry Pi control-plane and a `qnas` worker
+- 💽 A NAS layer with about 6 TB of RAID1 storage for media, shared data, and supporting services
+- 📺 A media automation ecosystem built around Jellyfin, Jellyseerr, Radarr, Sonarr, Bazarr, Prowlarr, FlareSolverr, Jellystat, and qBittorrent
+- 🌐 Network and access services such as Pi-hole, Tailscale, Portainer, Traefik, Cloudflare Tunnel, and Nginx
+- 📈 Observability with Prometheus, Grafana, and Alertmanager
+- 🖥️ A public storefront stack with `Pipita Store`, `PostgreSQL`, and `Nginx`
+- 🧩 Sanitized manifests and docs that explain the architecture without exposing credentials or private endpoints
 
-## What Is Confirmed Here
+## The Story
 
-From the files in this repo, the stack is organized around:
+The repo is organized so the story reads from top to bottom:
 
-- `Pipita Store` running as a containerized app
-- `PostgreSQL` for application persistence
-- `Nginx` as the public reverse proxy for the storefront
-- A k3s cluster split across a Raspberry Pi control-plane and a `qnas` worker
-- `Cloudflare Tunnel` and `Traefik` for cluster exposure where appropriate
-- A NAS layer with about 6 TB of RAID1 storage for media, backups, and shared data
-- A broader homelab service catalog that covers media, DNS, observability, and cluster tools
+1. Start with the public storefront and its simple app/database/proxy split.
+2. Move into the cluster where the Raspberry Pi acts as the control-plane and the worker side hosts ingress, tunnels, and supporting workloads.
+3. Layer in the NAS where the media automation chain lives and where Portainer helps keep containerized services manageable.
+4. Add observability so Grafana can show real health and usage data from the platform.
+5. Finish with Homepage manifests and screenshots that make the environment easy to present publicly.
 
-## Current Homelab Stack
+If you want the implementation narrative in more detail, read [docs/implementation.md](docs/implementation.md).
+
+## Current Stack
 
 ### Public Application
 
 - `Pipita Store` - storefront application
 - `PostgreSQL` - backing database
-- `Nginx` - reverse proxy and static file edge
+- `Nginx` - public edge and reverse proxy
 
 ### NAS Media Platform
 
@@ -41,7 +44,7 @@ From the files in this repo, the stack is organized around:
 - `Jellystat` - Jellyfin statistics
 - `qBittorrent` - downloads
 
-### Network and DNS
+### Network and Access
 
 - `Pi-hole` - DNS and ad blocking
 - `Tailscale` - private mesh access for admin and remote reachability
@@ -53,83 +56,36 @@ From the files in this repo, the stack is organized around:
 - `Prometheus` - metrics collection and scraping
 - `Alertmanager` - alert routing and status
 
-### Cluster and Access
+### Cluster and Exposure
 
 - `Homepage` - internal portal for the homelab
 - `Headlamp` - Kubernetes visibility
 - `pgAdmin` - PostgreSQL administration
 - `Cloudflare Tunnel` - selected public exposure without broad inbound access
 - `Traefik` - Kubernetes ingress and service exposure
-- Router admin - local network management
 
-## How It Was Implemented
+## How It Was Built
 
-The platform is split into a small public storefront and a larger homelab service layer:
+- The public app runs as a containerized stack with a clean reverse-proxy edge.
+- The cluster keeps platform services and admin surfaces separate from the NAS.
+- The NAS owns the media workflow and the private utility stack.
+- Homepage acts as the public-safe catalog for all the moving pieces.
+- Grafana receives health and usage signals so the repo tells the story of an observed system, not just a list of names.
 
-1. The storefront runs as a containerized app stack.
-2. `PostgreSQL` holds the persistent data.
-3. `Nginx` publishes the storefront through a controlled public edge.
-4. The Raspberry Pi hosts the k3s control-plane and most admin surfaces.
-5. The NAS hosts the media automation stack, DNS helpers, and remote access tooling.
-6. The NAS-side worker also hosts tunnel, ingress, and observability workloads.
-7. Homepage keeps the internal catalog of services organized.
-8. Screenshots and manifests stay sanitized so the repo can be shared publicly.
+## Repository Map
 
-## Representative Commands
+- [docs/architecture.md](docs/architecture.md) - architecture overview and runtime topology
+- [docs/implementation.md](docs/implementation.md) - implementation story from first service to current split
+- [docs/service-catalog.md](docs/service-catalog.md) - public-safe service inventory
+- [docs/operations.md](docs/operations.md) - everyday checks and deployment flow
+- [docs/screenshots/README.md](docs/screenshots/README.md) - guidance for public captures
+- [manifests/homepage-services.example.yaml](manifests/homepage-services.example.yaml) - Homepage layout example
+- [manifests/homepage-cluster.example.yaml](manifests/homepage-cluster.example.yaml) - cluster-facing Homepage example
+- [manifests/homepage-nas.example.yaml](manifests/homepage-nas.example.yaml) - NAS-facing Homepage example
+- [manifests/homepage-observability.example.yaml](manifests/homepage-observability.example.yaml) - monitoring example
 
-These are the kinds of commands used to bring the stack up and verify it:
+## Public Safety
 
-```bash
-docker compose up -d
-docker compose logs -f
-kubectl get nodes
-kubectl get pods -A
-kubectl get svc -A
-kubectl get pvc -A
-kubectl get ingress -A
-kubectl apply -f manifests/homepage-services.example.yaml
-```
-
-## Reverse Proxy
-
-The storefront is not exposed by the app container directly.
-
-- The app stays behind `Nginx`
-- `Nginx` serves the public edge and forwards requests to the app
-- Static media and assets are handled separately
-- `Cloudflare Tunnel` is used for selected cluster services
-- `Traefik` handles Kubernetes ingress
-- The database remains isolated from the public layer
-
-That gives the project a cleaner operational shape and a more professional story for public sharing.
-
-## Monitoring
-
-The monitoring layer is built around:
-
-- `Prometheus` for metrics collection and scraping
-- `Grafana` for dashboards and visual analysis
-- `Alertmanager` for alert routing and status
-
-This is enough to explain how the platform is observed without exposing internal targets or sensitive endpoints.
-
-The live apps and exporters feed Grafana with health and usage data for:
-
-- database health
-- media automation health
-- public service availability
-- ingress and tunnel status
-
-## Public Files
-
-- `docs/service-catalog.md`
-- `docs/screenshots/README.md`
-- `manifests/homepage-services.example.yaml`
-- `docs/screenshots/jellyseerr-dashboard.jpg`
-- `docs/screenshots/jellystat-analytics.jpg`
-
-## Notes
-
-- This repo does not describe a historical Argo CD setup.
-- The README reflects the current documented stack instead of older versions.
-- Anything that could leak credentials, private addresses, or internal-only operational detail stays out of the public tree.
+- Secrets, tokens, passwords, and private hostnames stay out of the repo.
+- The docs show patterns, not credentials.
+- Any sensitive operational detail is intentionally omitted so the project can be shared publicly with confidence.

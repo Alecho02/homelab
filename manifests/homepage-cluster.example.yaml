@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-cluster-example
+  namespace: homepage
+data:
+  settings.yaml: |
+    title: Cluster
+    theme: dark
+    color: slate
+  services.yaml: |
+    - Cluster:
+        - Homepage:
+            href: http://<cluster-host>/
+            description: Internal service catalog
+        - Headlamp:
+            href: http://<cluster-host>/
+            description: Kubernetes visibility
+        - pgAdmin:
+            href: http://<cluster-host>/
+            description: PostgreSQL administration
+    - Exposure:
+        - Traefik:
+            href: http://<cluster-host>/
+            description: Kubernetes ingress and routing
+        - Cloudflare Tunnel:
+            href: https://dash.cloudflare.com/
+            description: Selected public exposure for cluster services
